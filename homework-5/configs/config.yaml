@@ -1,0 +1,8 @@
+server:
+  port: "9000"
+
+database:
+  name: homework-5
+  username: postgres
+  password: postgres
+  port: 6666

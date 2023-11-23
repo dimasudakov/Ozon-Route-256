@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package bank_accounts;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "api/subscriptions.proto";
+
+option go_package = "gitlab.ozon.dev/sudakov.dima.2014/homework-3/pkg/bank_accounts";
+
+message Timestamp {
+  google.protobuf.Timestamp value = 1;
+}
+
+message UUID {
+  string value = 1;
+}
+
+message BankAccountDto {
+  UUID id = 1;
+  string holder_name = 2;
+  int32 balance = 3;
+  Timestamp opening_date = 4;
+  string bank_name = 5;
+  repeated subscriptions.SubscriptionDto subscriptions = 6;
+}
+
+service BankAccountService {
+  rpc CreateBankAccount(CreateBankAccountRequest) returns (CreateBankAccountResponse) {
+    option (google.api.http) = {
+      post: "/bank-accounts"
+    };
+  }
+
+  rpc GetBankAccountById(GetBankAccountByIdRequest) returns (GetBankAccountResponse) {
+    option (google.api.http) = {
+      get: "/bank-accounts/{id.value}"
+    };
+  }
+
+  rpc UpdateBankAccount(UpdateBankAccountRequest) returns (UpdateBankAccountResponse) {
+    option (google.api.http) = {
+      put: "/bank-accounts/{id.value}"
+    };
+  }
+
+  rpc DeleteBankAccount(DeleteBankAccountRequest) returns (DeleteBankAccountResponse) {
+    option (google.api.http) = {
+      delete: "/bank-accounts/{id.value}"
+    };
+  }
+}
+
+message CreateBankAccountRequest {
+  BankAccountDto account = 1;
+}
+
+message CreateBankAccountResponse {
+  BankAccountDto account = 1;
+}
+
+message GetBankAccountByIdRequest {
+  UUID id = 1;
+}
+
+message GetBankAccountResponse {
+  BankAccountDto account = 1;
+}
+
+message UpdateBankAccountRequest {
+  UUID id = 1;
+  BankAccountDto account = 2;
+}
+
+message UpdateBankAccountResponse {
+  BankAccountDto account = 1;
+}
+
+message DeleteBankAccountRequest {
+  UUID id = 1;
+}
+
+message DeleteBankAccountResponse {
+  BankAccountDto account = 1;
+}

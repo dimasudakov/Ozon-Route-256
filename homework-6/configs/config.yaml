@@ -1,0 +1,14 @@
+server:
+  port: "9000"
+
+database:
+  name: homework-5
+  username: postgres
+  password: postgres
+  port: 6666
+
+kafka:
+  logs-topic-name: "logs"
+  brokers:
+    - "127.0.0.1:9091"
+    - "127.0.0.1:9092"

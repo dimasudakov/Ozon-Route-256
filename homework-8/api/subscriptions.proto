@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gitlab.ozon.dev/sudakov.dima.2014/homework-3/pkg/subscriptions";
+
+package subscriptions;
+
+message UUID {
+  string value = 1;
+}
+
+message Timestamp {
+  google.protobuf.Timestamp value = 1;
+}
+
+message SubscriptionDto  {
+  UUID id = 1;
+  string subscription_name = 2;
+  int32 price = 3;
+  Timestamp start_date = 4;
+  Timestamp end_date = 5;
+  UUID account_id = 6;
+}
+
+service SubscriptionService {
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
+    option (google.api.http) = {
+      post: "/subscriptions"
+    };
+  }
+
+  rpc GetSubscriptionById(GetSubscriptionByIdRequest) returns (GetSubscriptionResponse) {
+    option (google.api.http) = {
+      get: "/subscriptions/{id}"
+    };
+  }
+}
+
+message CreateSubscriptionRequest {
+  SubscriptionDto subscription = 1;
+}
+
+message CreateSubscriptionResponse {
+  SubscriptionDto subscription = 1;
+}
+
+message GetSubscriptionByIdRequest {
+  UUID id = 1;
+}
+
+message GetSubscriptionResponse {
+  SubscriptionDto subscription = 1;
+}
